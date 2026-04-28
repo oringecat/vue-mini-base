@@ -1,0 +1,12 @@
+[
+  {
+    "VUE_APP_PLATFORM": "pc",
+    "VUE_APP_NAME": "电脑端应用",
+    "VUE_APP_ROOT": "src/projects/pc/"
+  },
+  {
+    "VUE_APP_PLATFORM": "mobile",
+    "VUE_APP_NAME": "移动端应用",
+    "VUE_APP_ROOT": "src/projects/mobile/"
+  }
+]

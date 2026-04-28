@@ -1,0 +1,20 @@
+.app-view {
+    display: flex;
+    flex-direction: column;
+    width: 100vw;
+    height: 100vh;
+
+    &.bg-default {
+        background-color: var(--app-background);
+    }
+
+    &.bg-primary {
+        background-color: var(--page-background);
+    }
+
+    &__body {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+    }
+}

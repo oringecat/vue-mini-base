@@ -1,0 +1,164 @@
+[
+    {
+        "code": "product",
+        "parentCode": "",
+        "title": "商品管理",
+        "urlType": 1,
+        "url": "",
+        "icon": "default",
+        "sort": 1,
+        "hide": false,
+        "remark": "",
+        "children": [
+            {
+                "code": "list",
+                "parentCode": "product",
+                "title": "商品列表",
+                "urlType": 1,
+                "url": "views/product/list/index.vue",
+                "icon": "default",
+                "sort": 1,
+                "hide": false,
+                "remark": "",
+                "children": [
+                    {
+                        "code": "modify",
+                        "parentCode": "list",
+                        "title": "修改",
+                        "urlType": 3,
+                        "url": "views/product/components/edit/index.vue",
+                        "icon": "edit",
+                        "sort": 1,
+                        "hide": false,
+                        "remark": "",
+                        "children": []
+                    },
+                    {
+                        "code": "delete",
+                        "parentCode": "list",
+                        "title": "删除",
+                        "urlType": 3,
+                        "url": "views/product/components/delete/index.vue",
+                        "icon": "delete",
+                        "sort": 2,
+                        "hide": false,
+                        "remark": "",
+                        "children": []
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "code": "order",
+        "parentCode": "",
+        "title": "订单管理",
+        "urlType": 1,
+        "url": "",
+        "icon": "default",
+        "sort": 2,
+        "hide": false,
+        "remark": "",
+        "children": [
+            {
+                "code": "list",
+                "parentCode": "order",
+                "title": "订单列表",
+                "urlType": 1,
+                "url": "views/order/list/index.vue",
+                "icon": "default",
+                "sort": 1,
+                "hide": false,
+                "remark": "",
+                "children": [
+                    {
+                        "code": "unshipped",
+                        "parentCode": "list",
+                        "title": "未发货",
+                        "urlType": 2,
+                        "url": "views/order/unshipped/index.vue",
+                        "icon": "unshipped",
+                        "sort": 1,
+                        "hide": false,
+                        "remark": "",
+                        "children": []
+                    },
+                    {
+                        "code": "shipped",
+                        "parentCode": "list",
+                        "title": "已发货",
+                        "urlType": 2,
+                        "url": "views/order/shipped/index.vue",
+                        "icon": "shipped",
+                        "sort": 2,
+                        "hide": false,
+                        "remark": "",
+                        "children": []
+                    },
+                    {
+                        "code": "aftersale",
+                        "parentCode": "list",
+                        "title": "售后",
+                        "urlType": 2,
+                        "url": "views/order/aftersale/index.vue",
+                        "icon": "aftersale",
+                        "sort": 3,
+                        "hide": false,
+                        "remark": "",
+                        "children": []
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "code": "user",
+        "parentCode": "",
+        "title": "用户管理",
+        "urlType": 1,
+        "url": "",
+        "icon": "default",
+        "sort": 3,
+        "hide": false,
+        "remark": "",
+        "children": [
+            {
+                "code": "list",
+                "parentCode": "user",
+                "title": "用户列表",
+                "urlType": 1,
+                "url": "views/user/list/index.vue",
+                "icon": "default",
+                "sort": 1,
+                "hide": false,
+                "remark": "",
+                "children": [
+                    {
+                        "code": "details",
+                        "parentCode": "list",
+                        "title": "详情",
+                        "urlType": 3,
+                        "url": "views/user/components/details/index.vue",
+                        "icon": "detail",
+                        "sort": 1,
+                        "hide": false,
+                        "remark": "",
+                        "children": []
+                    },
+                    {
+                        "code": "modify",
+                        "parentCode": "list",
+                        "title": "修改",
+                        "urlType": 3,
+                        "url": "views/user/components/edit/index.vue",
+                        "icon": "edit",
+                        "sort": 2,
+                        "hide": false,
+                        "remark": "",
+                        "children": []
+                    }
+                ]
+            }
+        ]
+    }
+]

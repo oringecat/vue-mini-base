@@ -1,0 +1,14 @@
+.app-block-group {
+    display: flex;
+    flex-direction: column;
+    padding-top: var(--block-padding-sm);
+    padding-bottom: var(--block-padding-sm);
+
+    &+& {
+        padding-top: 0;
+    }
+
+    &:empty {
+        display: none;
+    }
+}

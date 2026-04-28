@@ -1,0 +1,99 @@
+/* 动画时长 */
+@transition-duration: 300ms;
+
+/* 无过渡效果 */
+.delay-leave-active {
+    transition-duration: @transition-duration;
+}
+
+.route-in-leave-from,
+.route-in-enter-from,
+.route-out-enter-from,
+.route-out-enter-from {
+    will-change: transform, opacity;
+}
+
+.route-in-leave-to,
+.route-in-enter-active,
+.route-out-leave-active,
+.route-out-enter-to {
+    pointer-events: none;
+    transition: transform @transition-duration;
+}
+
+.route-in-leave-from {
+    &::after {
+        content: '';
+        opacity: 0;
+    }
+}
+
+.route-in-leave-to {
+    &::after {
+        content: '';
+        position: absolute;
+        z-index: 100;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background-color: rgba(0, 0, 0, .5);
+        opacity: 1;
+        transition: opacity @transition-duration;
+    }
+}
+
+.route-in-enter-from {
+    transform: translate3d(100%, 0, 0);
+}
+
+.route-in-enter-active {
+    position: absolute;
+    z-index: 1000;
+    top: 0;
+}
+
+.route-out-leave-active {
+    position: absolute;
+    z-index: 1000;
+    transform: translate3d(100%, 0, 0);
+}
+
+.route-out-enter-from {
+    &::after {
+        content: '';
+        opacity: 1;
+    }
+}
+
+.route-out-enter-to {
+    &::after {
+        content: '';
+        position: absolute;
+        z-index: 100;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background-color: rgba(0, 0, 0, .5);
+        opacity: 0;
+        transition: opacity @transition-duration;
+    }
+}
+
+/* 淡入效果 */
+.fade-enter-active {
+    position: absolute;
+    z-index: 1000;
+    top: 0;
+}
+
+.fade-enter-active,
+.fade-leave-active {
+    transition: opacity 100ms ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+    opacity: 0;
+}
