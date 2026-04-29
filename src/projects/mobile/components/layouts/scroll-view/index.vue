@@ -1,6 +1,16 @@
 <template>
-    <div ref="scrollRef" class="app-scroll-view">
-        <slot></slot>
+    <div class="app-scroll-view">
+        <div ref="scrollRef" class="app-scroll-view__main">
+            <van-sticky class="status-bar-fixed" :class="{ hide: isScrollDown }" position="top"
+                v-if="$slots['statusBarFixed']">
+                <slot name="statusBarFixed"></slot>
+            </van-sticky>
+            <div class="status-bar-scroll" :class="{ show: isScrollDown }" v-if="$slots['statusBarScroll']">
+                <slot name="statusBarScroll"></slot>
+            </div>
+            <slot></slot>
+        </div>
+        <slot name="footer"></slot>
     </div>
 </template>
 
@@ -21,7 +31,12 @@ const props = defineProps({
     },
     delay: {
         type: Number,
-        default: 200
+        default: 80
+    },
+    // 滚动切换状态栏阈值
+    threshold: {
+        type: Number,
+        default: 0
     }
 })
 
@@ -31,10 +46,16 @@ const scrollRef = shallowRef<HTMLDivElement>()
 const scrollParent = useScrollParent(scrollRef)
 const scrollMap = new Map<string, number>([[props.scrollName, props.scrollTop]])
 
+// 是否向下滚动（切换两个状态栏）
+const isScrollDown = shallowRef(false)
+
 const setScrollTop = () => {
     const el = scrollRef.value
     if (el) {
         el.scrollTop = scrollMap.get(props.scrollName) ?? props.scrollTop
+        if (props.threshold > 0) {
+            isScrollDown.value = el.scrollTop > props.threshold
+        }
     }
 }
 
@@ -46,13 +67,20 @@ const setScrollTop = () => {
 //     emit('scrollTolower')
 // }
 
-const listener = debounce((e: Event) => {
-    const el = e.target as HTMLDivElement
+// 防抖触发滚动事件
+const onScroll = debounce((el: HTMLDivElement) => {
     scrollMap.set(props.scrollName, el.scrollTop)
-
     emit('update:scrollTop', el.scrollTop)
     emit('scroll', el)
 }, props.delay)
+
+const listener = (e: Event) => {
+    const el = e.target as HTMLDivElement
+    if (props.threshold > 0) {
+        isScrollDown.value = el.scrollTop > props.threshold // 滚动超过阈值切换状态栏
+    }
+    onScroll(el)
+}
 
 useEventListener('scroll', listener, {
     target: scrollParent,

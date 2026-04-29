@@ -1,9 +1,10 @@
 <template>
-    <app-view>
-        <template #header>
-            <app-navbar>
-                首页
-            </app-navbar>
+    <app-scroll-view :threshold="100">
+        <template #statusBarFixed>
+            <app-navbar title="首页" />
+        </template>
+        <template #statusBarScroll>
+            <app-navbar title="首页" style="background-color: #fff;" />
         </template>
         <app-pull-refresh :refresh-id="activeTab">
             <van-tabs v-model:active="activeTab">
@@ -19,7 +20,7 @@
                 <van-tab title="标签 4">内容 4</van-tab>
             </van-tabs>
         </app-pull-refresh>
-    </app-view>
+    </app-scroll-view>
 </template>
 
 <script lang="ts" setup>

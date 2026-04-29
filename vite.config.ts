@@ -28,6 +28,9 @@ export default defineConfig(({ command }) => ({
   define: {
     'import.meta.env.PROJECT_ID': JSON.stringify(uuid) // 项目唯一标识
   },
+  server: {
+    open: true  // 自动跳转浏览器
+  },
   plugins: [
     vue(),
     vueJsx(),

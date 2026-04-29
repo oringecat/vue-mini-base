@@ -5,6 +5,7 @@ import AppBlockGroup from './block-group/index.vue'
 import AppBlock from './block/index.vue'
 import AppStatusbar from './statusbar/index.vue'
 import AppNavbar from './navbar/index.vue'
+import AppNavback from './navback/index.vue'
 
 declare module 'vue' {
     interface GlobalComponents {
@@ -14,6 +15,7 @@ declare module 'vue' {
         AppBlock: typeof AppBlock;
         AppStatusbar: typeof AppStatusbar;
         AppNavbar: typeof AppNavbar;
+        AppNavback: typeof AppNavbar;
     }
 }
 
@@ -23,7 +25,8 @@ const components = {
     AppBlockGroup,
     AppBlock,
     AppStatusbar,
-    AppNavbar
+    AppNavbar,
+    AppNavback
 }
 
 const install = (app: App) => {

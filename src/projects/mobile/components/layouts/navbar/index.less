@@ -1,1 +1,40 @@
-.app-navbar {}
+.app-navbar {
+    &--fixed {
+        position: fixed;
+        z-index: 1;
+        width: 100%;
+    }
+
+    &__header {
+        position: relative;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        height: 44px;
+        padding: 0 var(--block-padding-md);
+    }
+
+    &__col {
+        white-space: nowrap;
+
+        &--center {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        &--right {
+            text-align: right;
+        }
+    }
+
+    &__footer {
+        &:empty {
+            display: none;
+        }
+    }
+}

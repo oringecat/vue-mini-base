@@ -1,3 +1,39 @@
 .app-scroll-view {
-    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+
+    &__main {
+        flex: 1;
+        overflow-y: auto;
+        background-color: var(--app-background);
+
+        .status-bar-fixed {
+            z-index: 1;
+            opacity: 1;
+            transition: all 0.3s ease;
+
+            &.hide {
+                opacity: 0;
+                transform: translateY(-100%);
+                pointer-events: none;
+            }
+        }
+
+        .status-bar-scroll {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 2;
+            opacity: 0;
+            transform: translateY(-100%);
+            transition: all 0.3s ease;
+
+            &.show {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    }
 }
