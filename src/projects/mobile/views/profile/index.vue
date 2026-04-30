@@ -1,14 +1,14 @@
 <template>
-    <app-view>
-        <template #header>
-            <span>我的</span>
+    <app-scroll-view>
+        <template #header-fixed>
+            <app-nav-bar title="我的" :show-back-button="false" />
         </template>
-        <router-link to="/user/login">
-            <van-button>登录</van-button>
-        </router-link>
-    </app-view>
+        <van-cell-group inset>
+            <van-cell title="登录" to="/user/login" is-link />
+            <van-cell title="设置" to="/setting/language" is-link />
+        </van-cell-group>
+    </app-scroll-view>
 </template>
 
 <script lang="ts" setup>
-import AppView from '../../components/layouts/view/index.vue'
 </script>

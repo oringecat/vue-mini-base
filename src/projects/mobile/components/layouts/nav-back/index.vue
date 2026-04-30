@@ -1,5 +1,5 @@
 <template>
-    <div class="app-navback" @click="goback">
+    <div class="app-nav-back" @click="onBack">
         <slot>
             <Icon name="arrow-left" />
         </slot>
@@ -11,12 +11,12 @@ import { useAttrs } from 'vue'
 import { useRouter } from 'vue-router'
 import { Icon } from 'vant'
 
-const emit = defineEmits<{ (event: string, ...args: unknown[]): void }>()
+const emit = defineEmits()
 const router = useRouter()
 const attrs = useAttrs()
 
 // 返回按钮事件
-const goback = () => {
+const onBack = () => {
     if (attrs.onBack) {
         emit('back')
     } else {

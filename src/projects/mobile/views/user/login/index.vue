@@ -1,28 +1,46 @@
 <template>
     <app-view>
         <template #header>
-            <div>登录</div>
+            <app-nav-bar title="登录" />
         </template>
-        <van-loading v-if="loading" />
-        <app-block-group v-else>
-            <app-block>{{ total }}</app-block>
-        </app-block-group>
-        <router-link to="/setting/language">
-            <van-button>设置</van-button>
-        </router-link>
+        <van-form @submit="onSubmit">
+            <van-cell-group inset>
+                <van-field v-model="formData.account" name="account" label="账号" placeholder="必填"
+                    autocomplete="username" />
+                <van-field v-model="formData.password" type="password" name="password" label="密码" placeholder="必填"
+                    autocomplete="new-password" />
+            </van-cell-group>
+            <app-block>
+                <van-button type="primary" native-type="submit" :disabled="userStore.loading" block>登录</van-button>
+            </app-block>
+        </van-form>
     </app-view>
 </template>
 
 <script lang="ts" setup>
-import { useDataTable } from '@/hooks/datatable'
-import { getProductList } from '@/services/api/product'
+import { reactive, } from 'vue'
+import { showLoadingToast, showSuccessToast, showFailToast, closeToast } from 'vant'
+import { useUserStore } from '@/stores/user'
 
-const { total, updateItems } = useDataTable<Product.ProductItem>()
+const userStore = useUserStore()
 
-const { loading } = getProductList({
-    success: (res) => {
-        total.value = res.total
-        updateItems(res.data)
-    }
+const formData = reactive<User.LoginParams>({
+    account: '',
+    password: '',
+    client: 'web',
+    version: '1.0.0',
 })
+
+const onSubmit = () => {
+    showLoadingToast('登录中...')
+
+    userStore.userLogin(formData).then(() => {
+        showSuccessToast('登录成功')
+    }).catch((err) => {
+        formData.password = ''
+        showFailToast(err)
+    }).finally(() => {
+        closeToast()
+    })
+}
 </script>

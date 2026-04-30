@@ -1,9 +1,9 @@
 <template>
     <div ref="viewRef" class="app-view" :class="[`bg-${viewType}`]">
         <slot name="header"></slot>
-        <app-scroll-view class="app-view__body">
+        <div class="app-view__main">
             <slot></slot>
-        </app-scroll-view>
+        </div>
         <slot name="footer"></slot>
     </div>
 </template>

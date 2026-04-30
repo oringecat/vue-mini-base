@@ -1,9 +1,7 @@
 <template>
-    <div class="app-pull-refresh">
-        <van-pull-refresh v-model="loading" @refresh="onRefresh">
-            <slot></slot>
-        </van-pull-refresh>
-    </div>
+    <van-pull-refresh class="app-pull-refresh" v-model="loading" @refresh="onRefresh">
+        <slot></slot>
+    </van-pull-refresh>
 </template>
 
 <script lang="ts" setup>

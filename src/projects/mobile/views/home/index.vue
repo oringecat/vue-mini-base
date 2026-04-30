@@ -1,10 +1,12 @@
 <template>
-    <app-scroll-view :threshold="100">
-        <template #statusBarFixed>
-            <app-navbar title="首页" />
+    <app-scroll-view :threshold="200">
+        <template #header-fixed>
+            <app-nav-bar title="首页" :show-back-button="false" />
         </template>
-        <template #statusBarScroll>
-            <app-navbar title="首页" style="background-color: #fff;" />
+        <template #header-scroll>
+            <app-status-bar>
+                <van-search />
+            </app-status-bar>
         </template>
         <app-pull-refresh :refresh-id="activeTab">
             <van-tabs v-model:active="activeTab">

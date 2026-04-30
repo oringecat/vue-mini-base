@@ -5,6 +5,7 @@ declare namespace Product {
     }
 
     interface ProductItem {
+        id: number;
         productName: string;
     }
 }

@@ -4,8 +4,8 @@ import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
 
 import App from './App.vue'
 import createRouter from './router'
-import layouts from './components/layouts' // 全局布局组件
 import 'element-plus/dist/index.css'
+import layouts from './components/layouts' // 全局布局组件
 
 const pinia = createPinia()
 const app = createApp(App)

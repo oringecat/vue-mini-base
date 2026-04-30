@@ -1,44 +1,52 @@
-// 200ms - 1000ms 随机延迟响应
-const delay = () => Math.random() * 800 + 200
+import type { MockMethod } from 'vite-plugin-mock'
+import { mockResponse } from './mock-utils'
 
 export default [
     {
         url: '/api/user/login',
         method: 'post',
-        timeout: delay(),
-        response: () => ({
+        rawResponse: (req, res) => mockResponse(res, {
             code: 200,
+            message: 'ok',
             data: {
                 id: 1000,
                 userName: 'admin',
                 realName: '@cname', // 随机中文名
                 avatar: 'https://picsum.photos/200/200', // 随机头像
                 token: '@string(60)' // 随机60位token
-            }
-        })
+            },
+            total: 0
+        }, 1000)
     },
     {
         url: '/api/user/checktoken',
         method: 'get',
-        timeout: delay(),
-        response: () => ({
+        rawResponse: (req, res) => mockResponse(res, {
             code: 200,
+            message: 'ok',
             data: {
                 id: 1000,
                 userName: 'admin',
                 realName: '@cname',
                 avatar: 'https://picsum.photos/200/200',
                 token: '@string(60)'
-            }
+            },
+            total: 0
         })
     },
     {
         url: '/api/user/auths',
         method: 'get',
-        timeout: delay(),
-        response: () => ({
-            code: 200,
-            data: ['product', 'order', 'product-list', 'order-list-aftersale', 'order-list']
-        })
-    },
-]
+        rawResponse: (req, res) => {
+            const data = ['product', 'order', 'product-list', 'order-list-aftersale', 'order-list']
+            const total = data.length
+
+            mockResponse(res, {
+                code: 200,
+                message: 'ok',
+                data,
+                total
+            })
+        }
+    }
+] as MockMethod[]

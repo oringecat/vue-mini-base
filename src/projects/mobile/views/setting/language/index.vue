@@ -1,6 +1,8 @@
 <template>
     <app-view>
-        多语言
+        <template #header>
+            <app-nav-bar title="多语言" />
+        </template>
     </app-view>
 </template>
 

@@ -1,26 +1,28 @@
-// 200ms - 1000ms 随机延迟响应
-const delay = () => Math.random() * 800 + 200
+import type { MockMethod } from 'vite-plugin-mock'
+import { mockResponse } from './mock-utils'
 
 export default [
     {
         url: '/api/server/config',
         method: 'get',
-        timeout: delay(),
-        response: () => ({
+        rawResponse: (req, res) => mockResponse(res, {
             code: 200,
+            message: 'ok',
             data: {
-                apiUrl: 'http://localhost/api',
-                fileUrl: 'http://localhost/file'
-            }
+                apiUrl: 'http://127.0.0.1/api',
+                fileUrl: 'http://127.0.0.1/file'
+            },
+            total: 0
         })
     },
     {
         url: '/api/server/time',
         method: 'get',
-        timeout: delay(),
-        response: () => ({
+        rawResponse: (req, res) => mockResponse(res, {
             code: 200,
-            data: Date.now()
+            message: 'ok',
+            data: Date.now(),
+            total: 0
         })
     }
-]
+] as MockMethod[]

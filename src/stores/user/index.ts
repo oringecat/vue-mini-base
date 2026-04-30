@@ -26,6 +26,7 @@ export const useUserStore = defineStore('user', () => {
         userInfo: initUserInfo(),
     })
 
+    const loading = computed(() => state.loading)
     const token = computed(() => state.userInfo.token)
 
     const tokenRequest = checkToken({ manual: true })
@@ -105,6 +106,7 @@ export const useUserStore = defineStore('user', () => {
     })
 
     return {
+        loading,
         token,
         getUserInfo,
         userLogin,

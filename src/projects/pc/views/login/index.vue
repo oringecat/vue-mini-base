@@ -8,7 +8,7 @@
                 <el-input type="password" v-model="formData.password" placeholder="请输入" />
             </el-form-item>
             <el-form-item label=" ">
-                <el-button @click="formSubmit" :loading="loading">登录</el-button>
+                <el-button @click="onSubmit" :loading="loading">登录</el-button>
             </el-form-item>
         </el-form>
     </pc-view>
@@ -34,7 +34,7 @@ const formData = reactive<User.LoginParams>({
     version: '1.0.0',
 })
 
-const formSubmit = async () => {
+const onSubmit = async () => {
     try {
         loading.value = true
         await userStore.userLogin(formData)
