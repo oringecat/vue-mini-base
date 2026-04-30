@@ -14,6 +14,9 @@
                 <van-button type="primary" native-type="submit" :disabled="userStore.loading" block>登录</van-button>
             </app-block>
         </van-form>
+        <div v-if="userStore.token">
+            {{ userStore.userInfo }}
+        </div>
     </app-view>
 </template>
 

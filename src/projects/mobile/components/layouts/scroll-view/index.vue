@@ -1,9 +1,11 @@
 <template>
     <app-view class="app-scroll-view">
+        <template #header>
+            <slot name="header"></slot>
+        </template>
         <app-scroll-container class="app-scroll-view__container" v-model="scrollTop">
-            <van-sticky class="header-fixed" :class="{ hide: isScrollDown }" position="top"
-                v-if="$slots['header-fixed']">
-                <slot name="header-fixed"></slot>
+            <van-sticky class="header-sticky" :class="{ hide: isScrollDown }" position="top">
+                <slot name="header-sticky"></slot>
             </van-sticky>
             <div class="header-scroll" :class="{ show: isScrollDown }" v-if="$slots['header-scroll']">
                 <slot name="header-scroll"></slot>

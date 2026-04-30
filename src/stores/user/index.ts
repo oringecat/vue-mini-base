@@ -1,4 +1,4 @@
-import { reactive, computed, watch } from 'vue'
+import { reactive, toRefs, computed, watch } from 'vue'
 import { defineStore } from 'pinia'
 import { encryptAES, decryptAES } from '@/utils/crypto'
 import { login, checkToken } from '@/services/api/user'
@@ -26,7 +26,6 @@ export const useUserStore = defineStore('user', () => {
         userInfo: initUserInfo(),
     })
 
-    const loading = computed(() => state.loading)
     const token = computed(() => state.userInfo.token)
 
     const tokenRequest = checkToken({ manual: true })
@@ -88,9 +87,18 @@ export const useUserStore = defineStore('user', () => {
                 const params = JSON.parse(decryptedString)
                 await userLogin(params)
             } else {
-                throw new Error('自动登录失败')
+                await loadBaseData
             }
         }
+    }
+
+    // 用户登出
+    const userLogout = () => {
+        state.userInfo = initUserInfo()
+        sessionData.reset('token')
+        localData.reset('token')
+        localData.reset('autoLoginEncrypted')
+        eventBus.emit('logout')
     }
 
     // 监听状态变化
@@ -98,18 +106,12 @@ export const useUserStore = defineStore('user', () => {
         localData.setValue('rememberMe', newVal)
     })
 
-    eventBus.on('logout', () => {
-        sessionData.reset('token')
-        localData.reset('token')
-        localData.reset('autoLoginEncrypted')
-        state.userInfo = initUserInfo()
-    })
-
     return {
-        loading,
         token,
         getUserInfo,
         userLogin,
-        autoLogin
+        autoLogin,
+        userLogout,
+        ...toRefs(state)
     }
 })

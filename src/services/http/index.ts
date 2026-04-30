@@ -4,6 +4,7 @@ import type { AxiosRequestConfig } from 'axios'
 import type { RequestOptions, BaseResponse, Method } from './types'
 import { ResultCode } from './types'
 import { useTransitionStore } from '@/stores/transition'
+import { useUserStore } from '@/stores/user'
 
 export default new (class {
     private readonly axiosInstance = axios.create({
@@ -11,10 +12,12 @@ export default new (class {
     })
 
     private createHeader() {
+        const userStore = useUserStore()
         const timestamp = Date.now()
 
         return {
-            timestamp
+            timestamp,
+            authorization: userStore.token
         }
     }
 

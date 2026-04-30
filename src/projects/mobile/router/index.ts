@@ -1,6 +1,7 @@
 import { createWebHashHistory } from 'vue-router'
 import type { RouteRecordRaw } from 'vue-router'
 import { useHistoryStore } from './history'
+import serviceConfig from '@/services/config'
 import Pgae from '../components/layouts/page/index.vue'
 import PageHome from '../components/layouts/page-home/index.vue'
 
@@ -8,14 +9,6 @@ export default function createRouter() {
   const historyStore = useHistoryStore()
 
   const routes: RouteRecordRaw[] = [
-    {
-      path: '/launch',
-      name: 'launch',
-      component: () => import('../views/launch/index.vue'),
-      meta: {
-        ignoreAuth: true,
-      }
-    },
     {
       path: '/',
       component: Pgae,
@@ -37,6 +30,14 @@ export default function createRouter() {
           ]
         },
       ]
+    },
+    {
+      path: '/launch',
+      name: 'launch',
+      component: () => import('../views/launch/index.vue'),
+      meta: {
+        ignoreAuth: true,
+      }
     },
     {
       path: '/user',
@@ -65,6 +66,21 @@ export default function createRouter() {
   const router = historyStore.create({
     history: createWebHashHistory(),
     routes,
+  })
+
+  router.beforeEach(async (to) => {
+    if (serviceConfig.isReady) {
+      return true
+    } else {
+      if (to.name === 'launch' || to.name === 'login') {
+        return true
+      } else {
+        return {
+          name: 'launch',
+          query: { redirect: to.fullPath }
+        }
+      }
+    }
   })
 
   return router

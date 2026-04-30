@@ -1,6 +1,6 @@
 <template>
     <app-scroll-view :threshold="200">
-        <template #header-fixed>
+        <template #header-sticky>
             <app-nav-bar title="首页" :show-back-button="false" />
         </template>
         <template #header-scroll>

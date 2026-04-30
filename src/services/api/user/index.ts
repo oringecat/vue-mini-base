@@ -9,6 +9,13 @@ export function login(options?: RequestOptions<{ req: User.LoginParams; res: Bas
 }
 
 /**
+ * 用户登出
+ */
+export function logout() {
+  return http.createRequest('GET', '/api/user/logout')
+}
+
+/**
  * 令牌校验
  */
 export function checkToken(options?: RequestOptions<{ res: BaseResponse<User.UserInfo>; }>) {
