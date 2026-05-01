@@ -1,43 +1,4 @@
 .app-scroll-view {
-    &__container {
-        display: grid;
-        grid-template-rows: auto 1fr;
-
-        .header-sticky {
-            position: relative;
-            z-index: 99;
-            opacity: 1;
-            transition: all 0.1s ease;
-
-            &:empty {
-                display: none;
-            }
-
-            &.hide {
-                opacity: 0;
-                pointer-events: none;
-            }
-        }
-
-        .header-scroll {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            z-index: 100;
-            opacity: .5;
-            transform: translateY(-100%);
-            transition: all 0.3s ease;
-
-            &.show {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-    }
-
-    &__main {
-        display: flex;
-        flex-direction: column;
-    }
+    height: 100%;
+    overflow-y: auto;
 }

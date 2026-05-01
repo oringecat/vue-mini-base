@@ -13,6 +13,7 @@ declare global {
         /** 用户信息 */
         interface UserInfo {
             id: number;
+            roleId: number;
             userName: string;
             realName: string;
             avatar: string;

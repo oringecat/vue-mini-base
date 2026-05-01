@@ -1,7 +1,7 @@
 import { reactive, toRefs, computed, watch } from 'vue'
 import { defineStore } from 'pinia'
 import { encryptAES, decryptAES } from '@/utils/crypto'
-import { login, checkToken } from '@/services/api/user'
+import { login, logout, checkToken } from '@/services/api/user'
 import { localData, sessionData } from '../storage'
 import serviceConfig from '@/services/config'
 import eventBus from '@/utils/bus'
@@ -13,6 +13,7 @@ export const useUserStore = defineStore('user', () => {
     const initUserInfo = (): User.UserInfo => {
         return {
             id: 0,
+            roleId: 0,
             userName: '匿名用户',
             realName: '',
             avatar: '',
@@ -46,6 +47,7 @@ export const useUserStore = defineStore('user', () => {
         } else {
             sessionData.setValue('token', data.token)
         }
+
         state.userInfo = data
         eventBus.emit('login', data)
     }
@@ -94,10 +96,13 @@ export const useUserStore = defineStore('user', () => {
 
     // 用户登出
     const userLogout = () => {
-        state.userInfo = initUserInfo()
+        logout()
+
         sessionData.reset('token')
         localData.reset('token')
         localData.reset('autoLoginEncrypted')
+
+        state.userInfo = initUserInfo()
         eventBus.emit('logout')
     }
 

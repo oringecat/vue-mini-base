@@ -1,10 +1,10 @@
 <template>
-    <div class="page-home">
+    <div class="app-page-home">
         <router-view v-slot="{ Component }">
             <router-transition :css="cssTransition">
                 <!-- 缓存组件，前进刷新，后退缓存 -->
                 <keep-alive>
-                    <component class="page-home__main" :is="Component" />
+                    <component class="app-page-home__main" :is="Component" />
                 </keep-alive>
             </router-transition>
         </router-view>
@@ -30,11 +30,9 @@ const beforeChange = () => {
     return true
 }
 
-router.afterEach(() => {
-    nextTick(() => {
-        cssTransition.value = true
-    })
-})
+router.afterEach(() => nextTick(() => {
+    cssTransition.value = true
+}))
 </script>
 
 <style lang="less">

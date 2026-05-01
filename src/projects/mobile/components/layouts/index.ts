@@ -1,6 +1,6 @@
 import type { App } from 'vue'
 import AppView from './view/index.vue'
-import AppScrollContainer from './scroll-container/index.vue'
+import AppPageView from './page-view/index.vue'
 import AppScrollView from './scroll-view/index.vue'
 import AppBlockGroup from './block-group/index.vue'
 import AppBlock from './block/index.vue'
@@ -11,7 +11,7 @@ import AppNavBack from './nav-back/index.vue'
 declare module 'vue' {
     interface GlobalComponents {
         AppView: typeof AppView;
-        AppScrollContainer: typeof AppScrollContainer;
+        AppPageView: typeof AppPageView;
         AppScrollView: typeof AppScrollView;
         AppBlockGroup: typeof AppBlockGroup;
         AppBlock: typeof AppBlock;
@@ -23,7 +23,7 @@ declare module 'vue' {
 
 const components = {
     AppView,
-    AppScrollContainer,
+    AppPageView,
     AppScrollView,
     AppBlockGroup,
     AppBlock,

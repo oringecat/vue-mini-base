@@ -1,6 +1,6 @@
 <template>
     <div class="app-block-group" :style="styles">
-        <view class="app-block-group__title" v-if="title">{{ title }}</view>
+        <div class="app-block-group__title" v-if="title">{{ title }}</div>
         <slot></slot>
     </div>
 </template>

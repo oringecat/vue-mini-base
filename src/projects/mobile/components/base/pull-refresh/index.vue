@@ -5,7 +5,7 @@
 </template>
 
 <script lang="ts" setup>
-import { onUnmounted, shallowRef } from 'vue'
+import { onUnmounted, shallowRef, nextTick } from 'vue'
 import eventBus from '@/utils/bus'
 
 const props = defineProps({
@@ -20,14 +20,18 @@ const loading = shallowRef(false)
 const startCounts = shallowRef(0) // 事件触发计数器
 const finishCounts = shallowRef(0) // 事件结束计数器
 
+// 更新加载状态
+const updateLoading = () => nextTick(() => loading.value = finishCounts.value < startCounts.value)
+
 const onRefresh = () => {
     finishCounts.value = 0
     startCounts.value = eventBus.emit('pull-refresh-start', props.refreshId)
+    updateLoading()
 }
 
 const refreshListener = eventBus.on('pull-refresh-finish', () => {
     finishCounts.value++
-    loading.value = finishCounts.value < startCounts.value
+    updateLoading()
 })
 
 onUnmounted(() => refreshListener.off())

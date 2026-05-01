@@ -5,11 +5,16 @@ export default new (class {
     private readonly emitter = mitt<EventBus>()
     private readonly cleanups = new Map<symbol, () => void>()
 
+    // 获取事件监听器数量
+    getListenerCount<T extends keyof EventBus>(event: T) {
+        const events = this.emitter.all.get(event) ?? []
+        return events.length
+    }
+
     // 触发事件
     emit<T extends keyof EventBus>(event: T, payload?: EventBus[T]) {
         this.emitter.emit(event, payload as EventBus[T])
-        const events = this.emitter.all.get(event) ?? []
-        return events.length
+        return this.getListenerCount(event)
     }
 
     // 监听事件

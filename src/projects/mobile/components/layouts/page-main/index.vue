@@ -1,5 +1,5 @@
 <template>
-    <router-view class="app-page" v-slot="{ Component, route }">
+    <router-view v-slot="{ Component, route }">
         <router-transition :transition-name="historyStore.transitionName" @leave="onLeave" @after-enter="onAfterEnter">
             <!-- 缓存组件，前进刷新，后退缓存 -->
             <keep-alive :exclude="historyStore.excludes">

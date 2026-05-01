@@ -1,5 +1,5 @@
 <template>
-    <app-view>
+    <app-page-view>
         <template #header>
             <app-nav-bar title="登录" />
         </template>
@@ -14,17 +14,16 @@
                 <van-button type="primary" native-type="submit" :disabled="userStore.loading" block>登录</van-button>
             </app-block>
         </van-form>
-        <div v-if="userStore.token">
-            {{ userStore.userInfo }}
-        </div>
-    </app-view>
+    </app-page-view>
 </template>
 
 <script lang="ts" setup>
-import { reactive, } from 'vue'
-import { showLoadingToast, showSuccessToast, showFailToast, closeToast } from 'vant'
+import { reactive } from 'vue'
+import { useRouter } from 'vue-router'
+import { showLoadingToast, showSuccessToast, showFailToast } from 'vant'
 import { useUserStore } from '@/stores/user'
 
+const router = useRouter()
 const userStore = useUserStore()
 
 const formData = reactive<User.LoginParams>({
@@ -39,11 +38,10 @@ const onSubmit = () => {
 
     userStore.userLogin(formData).then(() => {
         showSuccessToast('登录成功')
+        router.back()
     }).catch((err) => {
         formData.password = ''
         showFailToast(err)
-    }).finally(() => {
-        closeToast()
     })
 }
 </script>

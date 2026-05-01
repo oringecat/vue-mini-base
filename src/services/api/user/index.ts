@@ -11,8 +11,8 @@ export function login(options?: RequestOptions<{ req: User.LoginParams; res: Bas
 /**
  * 用户登出
  */
-export function logout() {
-  return http.createRequest('GET', '/api/user/logout')
+export function logout(options?: RequestOptions) {
+  return http.createRequest('POST', '/api/user/logout', options)
 }
 
 /**

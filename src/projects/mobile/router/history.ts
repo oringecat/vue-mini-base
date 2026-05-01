@@ -3,25 +3,19 @@ import { createRouter } from 'vue-router'
 import { defineStore } from 'pinia'
 import { findLastIndex } from 'lodash'
 import type { RouterOptions, RouteLocationRaw, RouteLocationNormalized } from 'vue-router'
-import type { HistoryRoute, HistoryState } from './types'
+import type { HistoryState } from './types'
 
 export const useHistoryStore = defineStore('history', () => {
   const sessionKey = 'historys_' + (import.meta.env.PROJECT_ID || 'mobile')
+  const sessionData = sessionStorage.getItem(sessionKey)
 
   const state = reactive<HistoryState>({
-    historys: [], // 路由历史栈
+    historys: sessionData ? JSON.parse(sessionData) : [], // 路由历史栈
     excludes: [], // 不缓存的视图
     actionName: '', // 当前路由动作
     transitionName: '', // 过渡动画
     goStep: 0 // 前进后退步数
   })
-
-  const sessionData = sessionStorage.getItem(sessionKey)
-
-  if (sessionData) {
-    const sessionHistorys = JSON.parse(sessionData) as HistoryRoute[]
-    state.historys = sessionHistorys
-  }
 
   const excludes = computed(() => state.excludes)
   const transitionName = computed(() => state.transitionName)

@@ -2,8 +2,8 @@ import { createWebHashHistory } from 'vue-router'
 import type { RouteRecordRaw } from 'vue-router'
 import { useHistoryStore } from './history'
 import serviceConfig from '@/services/config'
-import Pgae from '../components/layouts/page/index.vue'
-import PageHome from '../components/layouts/page-home/index.vue'
+import MainLayout from '../components/layouts/page-main/index.vue'
+import HomeLayout from '../components/layouts/page-home/index.vue'
 
 export default function createRouter() {
   const historyStore = useHistoryStore()
@@ -11,11 +11,11 @@ export default function createRouter() {
   const routes: RouteRecordRaw[] = [
     {
       path: '/',
-      component: Pgae,
+      component: MainLayout,
       children: [
         {
           path: '',
-          component: PageHome,
+          component: HomeLayout,
           children: [
             {
               path: '',
@@ -23,7 +23,7 @@ export default function createRouter() {
               component: () => import('../views/home/index.vue'),
             },
             {
-              path: '/profile',
+              path: 'profile',
               name: 'profile',
               component: () => import('../views/profile/index.vue'),
             }
@@ -41,7 +41,7 @@ export default function createRouter() {
     },
     {
       path: '/user',
-      component: Pgae,
+      component: MainLayout,
       children: [
         {
           path: 'login',
@@ -52,7 +52,7 @@ export default function createRouter() {
     },
     {
       path: '/setting',
-      component: Pgae,
+      component: MainLayout,
       children: [
         {
           path: 'language',
@@ -72,7 +72,7 @@ export default function createRouter() {
     if (serviceConfig.isReady) {
       return true
     } else {
-      if (to.name === 'launch' || to.name === 'login') {
+      if (to.name === 'launch' || to.name === 'user-login') {
         return true
       } else {
         return {

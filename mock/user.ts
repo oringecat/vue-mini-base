@@ -10,6 +10,7 @@ export default [
             message: 'ok',
             data: {
                 id: 1000,
+                roleId: 0,
                 userName: 'admin',
                 realName: '@cname', // 随机中文名
                 avatar: 'https://picsum.photos/200/200', // 随机头像
@@ -17,6 +18,16 @@ export default [
             },
             total: 0
         }, 1000)
+    },
+    {
+        url: '/api/user/logout',
+        method: 'post',
+        rawResponse: (req, res) => mockResponse(res, {
+            code: 200,
+            message: 'ok',
+            data: {},
+            total: 0
+        })
     },
     {
         url: '/api/user/checktoken',
