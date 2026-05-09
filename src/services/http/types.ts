@@ -10,7 +10,7 @@ export interface RequestConfig {
 }
 
 export interface RequestOptions<T extends { req?: object, res?: unknown } = {}> {
-    manual?: boolean; // 是否手动触发
+    immediate?: boolean; // 是否立即执行
     data?: T extends { req: infer R } ? R : undefined; // 请求参数
     retryCount?: number; // 重试次数，0 = 无限次
     success?: (res: T['res']) => void;

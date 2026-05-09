@@ -29,8 +29,8 @@ export const useUserStore = defineStore('user', () => {
 
     const token = computed(() => state.userInfo.token)
 
-    const tokenRequest = checkToken({ manual: true })
-    const loginRequest = login({ manual: true })
+    const tokenRequest = checkToken({ immediate: false })
+    const loginRequest = login({ immediate: false })
 
     // 自动加载初始数据
     const loadBaseData = (async () => {

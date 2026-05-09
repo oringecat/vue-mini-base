@@ -1,5 +1,5 @@
 <template>
-    <van-pull-refresh class="app-pull-refresh" v-model="loading" @refresh="onRefresh">
+    <van-pull-refresh class="app-pull-refresh" v-model="loading" :head-height="60" @refresh="onRefresh">
         <slot></slot>
     </van-pull-refresh>
 </template>

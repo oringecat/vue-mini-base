@@ -23,7 +23,7 @@ export const useAuthStore = defineStore('auth', () => {
     const hasAuth = computed(() => userRoutes.value.length > 0)
 
     const { loading, fetchAsync } = getUserAuths({
-        manual: true
+        immediate: false
     })
 
     // 递归查找路由第一个有效路径

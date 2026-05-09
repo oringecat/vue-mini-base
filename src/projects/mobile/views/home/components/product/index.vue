@@ -1,5 +1,5 @@
 <template>
-    <app-list class="product-list" v-model:loading="loading" :finished="refreshing || !hasMore" :error="failed"
+    <app-list class="product-list" v-model:loading="loading" :finished="!hasMore" :error="failed"
         @load="loadData">
         <div v-for="(item, index) in dataList" :key="index">
             {{ item.productName }}
@@ -14,12 +14,13 @@ import { getProductList } from '@/services/api/product'
 import AppList from '@mobile/components/base/list/index.vue'
 
 const props = defineProps({
-    refreshId: [Number, String]
+    refreshId: Number
 })
 
 const { dataList, pageIndex, pageSize, hasMore, failed, updateItems, nextPage } = useScrollTable<Product.ProductItem>()
 
 const { loading, fetch } = getProductList({
+    immediate: false,
     data: {
         pageSize: pageSize.value,
         pageIndex: pageIndex.value
@@ -43,5 +44,7 @@ const loadData = () => {
     }
 }
 
-const { refreshing, refreshFinish } = useRefresh(loadData, props.refreshId)
+const { refreshing, refreshFinish } = useRefresh(loadData, {
+    refreshId: props.refreshId
+})
 </script>

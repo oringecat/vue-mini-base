@@ -109,7 +109,7 @@ export default new (class {
         }
 
         // 自动请求
-        if (!options.manual) {
+        if (options.immediate == null || options.immediate) {
             fetch()
         }
 

@@ -4,21 +4,24 @@ import type { FilterData, FilterOption, DataTableOptions } from './types'
 
 export function useDataTable<T>(options: DataTableOptions = {}, paginationType: 'page' | 'scroll' = 'page') {
     const state = reactive({
-        total: 0, // 总条数
+        total: -1, // 总条数
         pageSize: options.pageSize ?? 20, // 每页条数
         pageIndex: options.pageIndex ?? 1, // 当前页码
-        firstLoaded: false, // 标记首次加载
         failed: false // 是否失败
     })
 
+    const isRefreshing = shallowRef(false) // 下拉刷新状态
     const rawData = shallowRef<T[]>([]) // 原始数据
     const filterData = shallowRef<FilterData<T>[]>([]) // 过滤选项
 
     // 总页数
-    const pageCount = computed(() => Math.ceil(state.total / state.pageSize) || 1)
+    const pageCount = computed(() => state.total > 0 ? Math.ceil(state.total / state.pageSize) : 1)
 
     // 是否有更多
-    const hasMore = computed(() => !state.firstLoaded || state.pageIndex < pageCount.value)
+    const hasMore = computed(() => {
+        if (state.failed) return false
+        return state.total < 0 || (!isRefreshing.value && state.pageIndex < pageCount.value)
+    })
 
     const matchesFilter = (row: T, filter: FilterData<T>) => {
         return filter.fields.some((field) => {
@@ -54,8 +57,8 @@ export function useDataTable<T>(options: DataTableOptions = {}, paginationType: 
     // 更新列表
     const updateItems = (data: T[], count = 0) => {
         state.total = count || data.length
-        state.firstLoaded = true
         state.failed = false
+        isRefreshing.value = false
 
         if (paginationType === 'page' || state.pageIndex === 1) {
             rawData.value = data
@@ -65,12 +68,15 @@ export function useDataTable<T>(options: DataTableOptions = {}, paginationType: 
     }
 
     // 下一页
-    const nextPage = (isRefresh = false) => {
-        if (isRefresh) {
+    const nextPage = (refreshing = false) => {
+        isRefreshing.value = refreshing
+
+        if (refreshing) {
             state.failed = false
             state.pageIndex = 1
             return true
         }
+
         return state.pageIndex++ < pageCount.value
     }
 
