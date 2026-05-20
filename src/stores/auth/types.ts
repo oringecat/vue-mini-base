@@ -9,7 +9,7 @@ export interface AuthRoute {
     authType: AuthType;
     url?: string;
     component?: Component;
-    icon: string;
+    icon?: string;
     remark?: string;
     children?: AuthRoute[];
 }
@@ -20,7 +20,7 @@ export interface AuthRoute {
 export enum AuthType {
     Route = 1, // 路由
     Component = 2, // 组件
-    Button = 3, // 权限按钮
+    Operation = 3, // 操作权限
     Link = 4, // 外链
     Iframe = 5, // 内联框架
 }

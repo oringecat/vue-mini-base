@@ -1,7 +1,7 @@
-/* 动画时长 */
+// 动画时长
 @transition-duration: 300ms;
 
-/* 动画遮罩 */
+// 动画遮罩
 .transition-mask(@opacity: 1) {
     &::after {
         content: '';
@@ -18,7 +18,7 @@
     }
 }
 
-/* 无过渡效果 */
+// 无过渡效果
 .delay-leave-active {
     transition-duration: @transition-duration;
 }

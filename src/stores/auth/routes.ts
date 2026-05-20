@@ -1,5 +1,4 @@
-import { AuthType } from './types'
-import type { AuthRoute } from './types'
+import { AuthType, type AuthRoute } from './types'
 import Page from '@pc/components/layouts/page/index.vue'
 
 export const authRoutes: AuthRoute[] = [
@@ -22,14 +21,14 @@ export const authRoutes: AuthRoute[] = [
                     {
                         code: 'product-list-modify',
                         title: '修改',
-                        authType: AuthType.Button,
+                        authType: AuthType.Operation,
                         component: () => import('@pc/views/product/components/edit/index.vue'),
                         icon: 'edit'
                     },
                     {
                         code: 'product-list-delete',
                         title: '删除',
-                        authType: AuthType.Button,
+                        authType: AuthType.Operation,
                         component: () => import('@pc/views/product/components/delete/index.vue'),
                         icon: 'delete'
                     }
@@ -97,14 +96,14 @@ export const authRoutes: AuthRoute[] = [
                     {
                         code: 'user-list-details',
                         title: '详情',
-                        authType: AuthType.Button,
+                        authType: AuthType.Operation,
                         component: () => import('@pc/views/user/components/details/index.vue'),
                         icon: 'detail'
                     },
                     {
                         code: 'user-list-modify',
                         title: '修改',
-                        authType: AuthType.Button,
+                        authType: AuthType.Operation,
                         component: () => import('@pc/views/user/components/edit/index.vue'),
                         icon: 'edit'
                     }

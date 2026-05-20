@@ -8,21 +8,24 @@
 </template>
 
 <script lang="ts" setup>
-import { useAttrs } from 'vue'
+import { useAttrs, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { Icon } from 'vant'
+import { useRenderMode } from '@/components/render-mode-provider/useRenderMode'
 
 const emit = defineEmits()
+
+const { isPopup } = useRenderMode()
 const router = useRouter()
 const attrs = useAttrs()
 
-const hasBack = !!router.options.history.state.back
+const hasBack = computed(() => isPopup.value || !!router.options.history.state.back)
 
 // 返回按钮事件
 const onBack = () => {
     if (attrs.onBack) {
         emit('back')
-    } else if (hasBack) {
+    } else if (hasBack.value) {
         router.go(-1)
     } else {
         router.replace('/')

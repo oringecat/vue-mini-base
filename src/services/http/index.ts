@@ -1,12 +1,19 @@
 import { shallowRef } from 'vue'
-import axios from 'axios'
-import type { AxiosRequestConfig } from 'axios'
+import axios, { type AxiosRequestConfig } from 'axios'
 import type { RequestOptions, BaseResponse, Method } from './types'
 import { ResultCode } from './types'
 import { useTransitionStore } from '@/stores/transition'
 import { useUserStore } from '@/stores/user'
+//import serviceConfig from '@/services/config'
 
 export default new (class {
+    constructor() {
+        // serviceConfig.onReady(() => {
+        //     const baseUrl = serviceConfig.getServiceConfig('apiUrl')
+        //     this.axiosInstance.defaults.baseURL = baseUrl
+        // })
+    }
+
     private readonly axiosInstance = axios.create({
         timeout: 30000,
     })
@@ -46,16 +53,13 @@ export default new (class {
 
     createRequest<Req extends object, Res>(method: Method, url: string, options: RequestOptions<{ req: Req, res: Res }> = {}) {
         const loading = shallowRef(false)
-        const controller = new AbortController()
+        const config: AxiosRequestConfig = { method, url }
 
-        const config: AxiosRequestConfig = {
-            method,
-            url,
-            signal: controller.signal
-        }
+        let controller: AbortController | null = null
 
-        // 异步请求数据
-        const fetchAsync = (data: Partial<Req> = {}) => new Promise<Res>((resolve, reject) => {
+        // 原始请求方法
+        const rawFetch = (data: Partial<Req> = {}) => new Promise<Res>((resolve, reject) => {
+            abort()
             loading.value = true
 
             const mergedData = { ...options.data, ...data }
@@ -66,6 +70,8 @@ export default new (class {
                 config.data = mergedData
             }
 
+            controller = new AbortController()
+            config.signal = controller.signal
             config.headers = this.createHeader()
 
             this.request<Res>(config).then((res) => {
@@ -92,30 +98,31 @@ export default new (class {
             })
         })
 
-        // 获取并处理数据
-        const fetch = (data: Partial<Req> = {}) => {
-            fetchAsync(data).then((res) => {
-                options.success?.(res)
-            }).catch((err) => {
-                options.fail?.(err)
-            }).finally(() => {
-                options.complete?.()
-            })
+        // 请求并自动处理回调
+        const fetch = async (data: Partial<Req> = {}) => {
+            try {
+                const res = await rawFetch(data)
+                options.onSuccess?.(res)
+            } catch (err) {
+                options.onError?.(String(err))
+            } finally {
+                options.onFinally?.()
+            }
         }
 
-        // 取消请求
+        // 取消当前请求
         const abort = () => {
-            controller.abort()
+            controller?.abort()
         }
 
-        // 自动请求
-        if (options.immediate == null || options.immediate) {
+        // 默认立即请求
+        if (options.immediate ?? true) {
             fetch()
         }
 
         return {
             loading,
-            fetchAsync,
+            rawFetch,
             fetch,
             abort
         }

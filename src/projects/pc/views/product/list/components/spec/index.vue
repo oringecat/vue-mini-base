@@ -14,8 +14,7 @@
 </template>
 
 <script lang="ts" setup>
-import { reactive, computed } from 'vue'
-import type { PropType } from 'vue'
+import { reactive, computed, type PropType } from 'vue'
 import type { Category, SaleAttribute, SaleSpec } from '@/types/product'
 
 const props = defineProps({

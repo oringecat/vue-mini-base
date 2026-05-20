@@ -9,17 +9,17 @@ export interface RequestConfig {
     data?: object; // 请求参数
 }
 
-export interface RequestOptions<T extends { req?: object, res?: unknown } = {}> {
+export interface RequestOptions<T extends { req?: object, res?: unknown } = Record<string, unknown>> {
     immediate?: boolean; // 是否立即执行
-    data?: T extends { req: infer R } ? R : undefined; // 请求参数
+    data?: T extends { req: infer R } ? R : unknown; // 请求参数
     retryCount?: number; // 重试次数，0 = 无限次
-    success?: (res: T['res']) => void;
-    fail?: (err: string) => void;
-    complete?: () => void;
+    onSuccess?: (res: T['res']) => void;
+    onError?: (err: string) => void;
+    onFinally?: () => void;
 }
 
 /**
- * Http响应结果
+ * 统一响应结构
  */
 export interface BaseResponse<T = unknown> {
     code: ResultCode;
@@ -28,8 +28,14 @@ export interface BaseResponse<T = unknown> {
     total: number;
 }
 
+// 错误响应结构
+export interface ErrorResponse {
+    code: ResultCode;
+    message: string;
+}
+
 /**
- * Http响应结果状态码
+ * 响应状态码枚举
  */
 export enum ResultCode {
     Success = 200, //成功

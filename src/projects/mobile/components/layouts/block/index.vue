@@ -5,8 +5,7 @@
 </template>
 
 <script lang="ts" setup>
-import { inject, computed } from 'vue'
-import type { PropType } from 'vue'
+import { inject, computed, type PropType } from 'vue'
 
 const props = defineProps({
     inset: {

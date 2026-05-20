@@ -15,12 +15,15 @@ const authStore = useAuthStore()
 const initializeApp = async () => {
     try {
         await userStore.autoLogin()
-        await authStore.fetchUserAuths(router)
 
-        if (authStore.hasAuth) {
-            const redirect = route.query.redirect
-            if (redirect) {
-                router.replace(redirect.toString())
+        if (userStore.token) {
+            await authStore.fetchUserAuths(router)
+        }
+
+        if (userStore.token && authStore.hasAuth) {
+            const redirected = route.redirectedFrom
+            if (redirected) {
+                router.replace(redirected.fullPath)
             } else {
                 router.replace('/')
             }

@@ -22,7 +22,7 @@ export const useAuthStore = defineStore('auth', () => {
     // 是否有权限
     const hasAuth = computed(() => userRoutes.value.length > 0)
 
-    const { loading, fetchAsync } = getUserAuths({
+    const { loading, rawFetch } = getUserAuths({
         immediate: false
     })
 
@@ -40,7 +40,7 @@ export const useAuthStore = defineStore('auth', () => {
 
     // 请求用户权限
     const fetchUserAuths = async (router: Router) => {
-        const res = await fetchAsync()
+        const res = await rawFetch()
         userAuths.value = filterAuthRoutes(authRoutes, res.data)
         userRoutes.value.forEach(router.addRoute)
     }

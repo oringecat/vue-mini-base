@@ -17,7 +17,7 @@ export const useUserStore = defineStore('user', () => {
             userName: '匿名用户',
             realName: '',
             avatar: '',
-            token: tokenStorage === 'local' ? localData.getValue('token') : sessionData.getValue('token')
+            token: tokenStorage === 'local' ? localData.getValue('accessToken') : sessionData.getValue('accessToken')
         }
     }
 
@@ -43,9 +43,9 @@ export const useUserStore = defineStore('user', () => {
 
     const setUserInfo = (data: User.UserInfo) => {
         if (tokenStorage === 'local') {
-            localData.setValue('token', data.token)
+            localData.setValue('accessToken', data.token)
         } else {
-            sessionData.setValue('token', data.token)
+            sessionData.setValue('accessToken', data.token)
         }
 
         state.userInfo = data
@@ -59,7 +59,7 @@ export const useUserStore = defineStore('user', () => {
             await loadBaseData()
             cleanup()
 
-            const res = await loginRequest.fetchAsync(params)
+            const res = await loginRequest.rawFetch(params)
 
             if (state.rememberMe) {
                 const encryptedString = encryptAES(JSON.stringify(params)) // 数据加密
@@ -91,7 +91,7 @@ export const useUserStore = defineStore('user', () => {
 
             if (token.value) {
                 try {
-                    const res = await tokenRequest.fetchAsync()
+                    const res = await tokenRequest.rawFetch()
                     setUserInfo(res.data)
                 } catch {
                     cleanup()
@@ -104,8 +104,8 @@ export const useUserStore = defineStore('user', () => {
 
     // 清除登录信息
     const cleanup = () => {
-        sessionData.reset('token')
-        localData.reset('token')
+        sessionData.reset('accessToken')
+        localData.reset('accessToken')
         localData.reset('autoLoginEncrypted')
         state.userInfo = initUserInfo()
     }

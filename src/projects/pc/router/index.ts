@@ -1,5 +1,4 @@
-import { createWebHistory } from 'vue-router'
-import type { RouteRecordRaw } from 'vue-router'
+import { createWebHistory, type RouteRecordRaw } from 'vue-router'
 import { useHistoryStore } from './history'
 import { useAuthStore } from '@/stores/auth'
 import serviceConfig from '@/services/config'

@@ -1,5 +1,5 @@
 /**
- * 本地存储类
+ * 存储类
  */
 export default class <T extends object> {
     constructor(storage: Storage, source: T, prefix?: string) {

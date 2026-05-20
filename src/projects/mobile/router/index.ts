@@ -1,5 +1,4 @@
-import { createWebHashHistory } from 'vue-router'
-import type { RouteRecordRaw } from 'vue-router'
+import { createWebHashHistory, type RouteRecordRaw } from 'vue-router'
 import { useHistoryStore } from './history'
 import { useUserStore } from '@/stores/user'
 import serviceConfig from '@/services/config'
@@ -63,9 +62,14 @@ export default function createRouter() {
       component: MainLayout,
       children: [
         {
-          path: 'order',
+          path: '',
           name: 'order-list',
           component: () => import('../views/order/list/index.vue')
+        },
+        {
+          path: 'detail',
+          name: 'order-detail',
+          component: () => import('../views/order/detail/index.vue')
         }
       ]
     },

@@ -8,7 +8,7 @@
 </template>
 
 <script lang="ts" setup>
-import { useScrollTable } from '@/hooks/datatable'
+import { useScrollTable } from '@/composables/datatable'
 import { useRefresh } from '@/composables/refresh'
 import { getProductList } from '@/services/api/product'
 import AppList from '@mobile/components/base/list/index.vue'
@@ -25,13 +25,13 @@ const { loading, fetch } = getProductList({
         pageSize: pageSize.value,
         pageIndex: pageIndex.value
     },
-    success: (res) => {
+    onSuccess: (res) => {
         updateItems(res.data, res.total)
     },
-    fail: () => {
+    onError: () => {
         failed.value = true
     },
-    complete: () => {
+    onFinally: () => {
         refreshFinish()
     }
 })

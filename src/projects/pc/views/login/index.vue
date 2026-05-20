@@ -16,11 +16,12 @@
 
 <script lang="ts" setup>
 import { reactive, shallowRef } from 'vue'
-import { useRouter } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import { ElMessage } from 'element-plus'
 import { useUserStore } from '@/stores/user'
 import { useAuthStore } from '@/stores/auth'
 
+const route = useRoute()
 const router = useRouter()
 const userStore = useUserStore()
 const authStore = useAuthStore()
@@ -41,7 +42,12 @@ const onSubmit = async () => {
         await authStore.fetchUserAuths(router)
 
         if (authStore.hasAuth) {
-            router.push('/')
+            const redirected = route.redirectedFrom
+            if (redirected) {
+                router.replace(redirected.fullPath)
+            } else {
+                router.replace('/')
+            }
         } else {
             ElMessage.error('权限不足')
         }

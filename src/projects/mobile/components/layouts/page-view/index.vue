@@ -17,8 +17,7 @@
 </template>
 
 <script lang="ts" setup>
-import { shallowRef, watch } from 'vue'
-import type { PropType } from 'vue'
+import { shallowRef, watch, type PropType } from 'vue'
 
 const props = defineProps({
     scrollName: String,

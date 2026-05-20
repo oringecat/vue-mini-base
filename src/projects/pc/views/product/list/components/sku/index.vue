@@ -69,8 +69,7 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, reactive, computed, watch } from 'vue'
-import type { PropType } from 'vue'
+import { ref, reactive, computed, watch, type PropType } from 'vue'
 import type { CheckboxValueType } from 'element-plus'
 import type { Category, SaleAttribute, SaleSpec, ProductSku } from '@/types/product'
 

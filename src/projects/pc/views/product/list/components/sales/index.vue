@@ -17,8 +17,7 @@
 </template>
 
 <script lang="ts" setup>
-import { reactive } from 'vue'
-import type { PropType } from 'vue'
+import { reactive, type PropType } from 'vue'
 import type { Category, SaleAttribute } from '@/types/product'
 
 defineProps({

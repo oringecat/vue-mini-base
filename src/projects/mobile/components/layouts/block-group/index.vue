@@ -6,8 +6,7 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, provide } from 'vue'
-import type { PropType, CSSProperties } from 'vue'
+import { computed, provide, type PropType, type CSSProperties } from 'vue'
 
 const props = defineProps({
     title: String,
